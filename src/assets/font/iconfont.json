@@ -1,0 +1,93 @@
+{
+  "id": "2848872",
+  "name": "kaoyan_web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6682542",
+      "name": "个人简介",
+      "font_class": "gerenjianjie",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "10068467",
+      "name": "打卡",
+      "font_class": "daka",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "11399580",
+      "name": "业务角色",
+      "font_class": "yewujiaose",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "11464296",
+      "name": "最后期限，时间，火焰时间",
+      "font_class": "zuihouqixianshijianhuoyanshijian",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "23191233",
+      "name": "状态",
+      "font_class": "zhuangtai",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "1327070",
+      "name": "修改信息",
+      "font_class": "icon-xiugai",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "700789",
+      "name": "本月",
+      "font_class": "benyue",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "700790",
+      "name": "本周",
+      "font_class": "benzhou",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "2058909",
+      "name": "每日计划1",
+      "font_class": "meirijihua",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "3865266",
+      "name": "计划",
+      "font_class": "jihua",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4488844",
+      "name": "密码登录",
+      "font_class": "mimadenglu",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "10392614",
+      "name": "登录",
+      "font_class": "denglu",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    }
+  ]
+}
