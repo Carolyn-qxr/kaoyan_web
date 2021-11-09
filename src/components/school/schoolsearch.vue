@@ -10,7 +10,7 @@
 			<el-card class="box-card">
 				<h3>地区 </h3>
 				<div style="margin-left:5%">
-					<el-radio-group v-model="radio" @change="getSchoolForm()">
+					<el-radio-group v-model="radio" @change="getSchoolForm(0,8)">
 						<el-radio-button v-for="(region,index) in location" :key="index" :label="region">{{region}}
 						</el-radio-button>
 
@@ -52,6 +52,11 @@
 					</el-table-column>
 				</el-table>
 			</el-card>
+			<div class="block">
+				<el-pagination layout="prev, pager, next" :total="this.pageAllSize*10"
+					@current-change="PageChage">
+				</el-pagination>
+			</div>
 		</el-main>
 	</el-container>
 </template>
@@ -60,7 +65,7 @@
 	import homeheader from '../home/homeheader.vue'
 
 	export default {
-		computed:{
+		computed: {
 			schoolName() {
 				return this.$store.state.title;
 			}
@@ -79,16 +84,21 @@
 				// official: "https://element.eleme.io"}],
 				tableData: [],
 				radio: "全部",
+				pageAllSize:0
 			}
 
 		},
 		mounted() {
-			if (this.schoolName == "")   //逻辑上还有问题
-				this.getSchoolForm();
+			if (this.schoolName == "") //逻辑上还有问题
+				this.getSchoolForm(0, 8);
 			else
-			    this.getSchoolByName()
+				this.getSchoolByName()
+			
 		},
 		methods: {
+			PageChage(x){
+				this.getSchoolForm(x,8);
+			},
 			filterTag(value, row) {
 				return row.features === value;
 			},
@@ -108,18 +118,21 @@
 					}
 				});
 			},
-			getSchoolForm() {
+			getSchoolForm(pageNum, pageSize) {
 				this.$axioss({
 					method: "get",
 					url: this.HOST + "/getSchoolBylocation",
 					crossDomain: true,
 					dataType: 'jsonp',
 					params: {
-						location: this.radio
+						location: this.radio,
+						pageNum: pageNum,
+						pageSize: pageSize
 					}
 				}).then(response => {
 					if (response.data.code == "200") {
 						this.tableData = response.data.data.data;
+			            this.pageAllSize=response.data.data.totalPages;
 					}
 				})
 			},

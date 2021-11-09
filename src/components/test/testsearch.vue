@@ -20,7 +20,7 @@
 					</div>
 					<h4>专业编号分类 </h4>
 					<div style="margin-left:10%">
-						<el-radio-group v-model="courseName" @change="getTestBycourseName()" size="small">
+						<el-radio-group v-model="courseName" @change="getTestBycourseName(0,8)" size="small">
 							<el-radio-button v-for="(course,index) in courseNum " :key="index" :label="course.courseid">
 								{{course.coursename}}
 							</el-radio-button>
@@ -43,7 +43,10 @@
 						</el-table>
 					</el-card>
 				</el-card>
-
+				<div class="block">
+					<el-pagination layout="prev, pager, next" :total="this.pageAllSize*10" @current-change="PageChage">
+					</el-pagination>
+				</div>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -67,10 +70,14 @@
 				userName: "",
 				courseName: -1,
 				courseType: "0", //课程种类
+				pageAllSize: 0
 
 			}
 		},
 		methods: {
+			PageChage(x){
+				this.getTestBycourseName(x,8);
+			},
 			goBack() {
 				this.$store.commit("editTitle", "");
 				this.$router.go(-1);
@@ -83,7 +90,7 @@
 					}
 				});
 			},
-			getTestBycourseName() {
+			getTestBycourseName(pageNum, pageSize) {
 				this.$axioss({
 					method: "get",
 					url: this.HOST + "/getTestByCourse",
@@ -92,11 +99,14 @@
 					params: {
 						title: this.title,
 						courseId: this.courseName,
-						courseType: this.courseType
+						courseType: this.courseType,
+						pageNum: pageNum,
+						pageSize: pageSize
 					}
 				}).then(response => {
 					if (response.data.code == "200") {
 						this.test = response.data.data.data
+						this.pageAllSize = response.data.data.totalPages;
 					}
 				})
 
@@ -108,13 +118,13 @@
 					crossDomain: true,
 					dataType: 'jsonp',
 					params: {
-						courseType: this.courseType
+						courseType: this.courseType,
 					}
 				}).then(response => {
 					if (response.data.code == "200") {
 						this.courseNum = response.data.data;
 						this.courseName = -1;
-						this.getTestBycourseName(); //选择大课程的所有资料
+						this.getTestBycourseName(0, 8); //选择大课程的所有资料
 					}
 				})
 			},
