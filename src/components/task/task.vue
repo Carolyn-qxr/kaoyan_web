@@ -1,19 +1,19 @@
 <template xmlns:el-table="http://www.w3.org/1999/html">
 	<div class="task">
 		<div class="navigation-bar">
-			<el-button @click="goback()">返回</el-button>
-			<el-divider content-position="left" class="divider">学海无涯</el-divider>
+			<el-image :src="logourl" style="position:absolute;width:300px;height:70px;left:10px;top:13px" @click="gohome()"></el-image>
 			<div class="record">
 				<span div class="text1">已连续打卡:
 					<span style="color: darksalmon">{{"\xa0"+this.userInfo.days}}天</span>
 				</span>
-				<el-button div class="daka" size="medium" @click="daka">打卡</el-button>
+				<el-button div class="daka" size="mini" @click="daka">打卡</el-button>
 
-				<el-button div class="add" circle icon="el-icon-plus" @click="dialogVisible=true"></el-button>
+				<el-button div class="add" circle icon="el-icon-plus" @click="dialogVisible=true" size="mini"></el-button>
 			</div>
 			<div class="daojishi">
 				<span class="text2">距离考研还剩：{{"\xa0"+daojishi}}天</span>
 			</div>
+			 <i class="el-icon-house" style="position:absolute;left:83%;top:45%;font-color:#909399;font-size:0.9em" @click="gohome">首页</i>
 			<div class="avatar">
 				<div class="Img">
 					<img @click="drawer=true" src="../assets/img/avatar.jpg" />
@@ -34,11 +34,11 @@
 
 					<el-menu-item index="/task/home">
 						<i class="el-icon-s-home">{{"\xa0"}}</i>
-						<template #title>home</template>
+						<template #title>任务列表</template>
 					</el-menu-item>
 					<el-menu-item index="/task/calender" class="el-menu-item">
 						<i class="el-icon-date">{{"\xa0"}}</i>
-						<template #title>calender</template>
+						<template #title>任务日历</template>
 					</el-menu-item>
 				</el-menu>
 				<el-main>
@@ -201,8 +201,9 @@
 		},
 		data() {
 			return {
+				logourl: require("../assets/font2.png"),
 				dialogVisible2:false,
-				daojishi: 80,
+				daojishi: this.days,
 				/*用户信息*/
 				userInfo: {},
 				/***/
@@ -250,6 +251,11 @@
 			}
 		},
 		methods: {
+			 gohome(){
+				this.$router.push({
+					path: '/home'
+				});
+			},
 			insertPlan() { //插入任务
 				this.dialogVisible = false;
 				this.plan.begin = this.startTime;
@@ -367,7 +373,7 @@
 	}
 
 	.divider {
-		margin-top: 6.3%;
+		margin-top: 6.7%;
 	}
 
 	.task-contain {
@@ -389,12 +395,12 @@
 		position: absolute;
 		width: 35%;
 		height: 100%;
-		left: 3%;
+		left: 22%;
 	}
 
 	.text1 {
 		position: absolute;
-		top: 30%;
+		top: 20%;
 		font-size: 1.5em;
 		font-weight: bold;
 		color: #409EFF;
@@ -402,14 +408,14 @@
 
 	.daka {
 		position: absolute;
-		left: 55%;
-		top: 30%;
+		left: 0%;
+		top: 60%;
 	}
 
 	.add {
 		position: absolute;
-		left: 75%;
-		top: 28%;
+		left: 15%;
+		top: 60%;
 	}
 
 	.daojishi {
@@ -430,8 +436,9 @@
 	.avatar {
 		position: absolute;
 		width: 20%;
-		left: 83%;
+		left: 85%;
 		height: 100%;
+		top:6.7%
 	}
 
 	.Img img {
@@ -439,7 +446,7 @@
 		height: 40px;
 		position: absolute;
 		border-radius: 50%;
-		top: 22%;
+		top: 23%;
 		left: 25%;
 	}
 

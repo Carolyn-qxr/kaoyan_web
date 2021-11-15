@@ -1,11 +1,19 @@
 <template>
 	<el-container>
+		<el-header class="header">
+			<div style="position:absolute;top:4.2%">
+				<h1>资料库</h1>
+			</div>
+			 <i class="el-icon-house" style="position:absolute;left:15%;top:12.3%;font-color:#909399;font-size:0.9em" @click="gohome">首页</i>
+		</el-header>
+		<div class="tiao">
+
+		</div>
 		<el-main>
-			<h1>资料库</h1>
-			<el-divider></el-divider>
+
 			<el-page-header @back="goBack">
 			</el-page-header>
-			<el-card class="box-card">
+			<div class="box-card">
 				<h1>{{test.title}}</h1>
 
 				<el-row :gutter="20">
@@ -13,7 +21,7 @@
 					<el-col :span="3"> <i class="el-icon-view"><span>{{test.views}}</span></i> </el-col>
 					<el-col :span="4"> <span>科目分类：{{courseType1}}</span> </el-col>
 					<el-col :span="4"> <span>专业编号：{{test.couresname}}</span> </el-col>
-					<el-col :span="4"> <span>上传时间：{{test.upload}}</span> </el-col>
+					<el-col :span="4"> <span>上传时间：{{dateFormat('YYYY-mm-dd',test.upload)}}</span> </el-col>
 				</el-row>
 				<br>
 				<span style="margin-left:4%">{{test.content}}</span>
@@ -22,15 +30,18 @@
 				<span>下载区</span>
 				<br>
 				<br>
-				<el-col :span="5" v-for="(information,index) in location" :key="index">
-					<el-card class="box-card">
-						<p>{{information}}
-						</p>
-						<el-button type="primary" style="margin-left:60%" @click="geturl(information.location)"> 下载</el-button>
-						<!-- <a :href="geturl(information.location)">xxxx</a> -->
-					</el-card>
+				<el-col :span="4" v-for="(information,index) in location" :key="index">
+					<div style="width:200px;height:100px">
+						<div style="position:relative;top:-15px">
+							<p>下载文件{{index+1}}
+							</p>
+							<el-button size="mini" type="primary" style="margin-left:3%"
+								@click="geturl(information.location)"> 下载</el-button>
+							<!-- <a :href="geturl(information.location)">xxxx</a> -->
+						</div>
+					</div>
 				</el-col>
-			</el-card>
+			</div>
 
 		</el-main>
 
@@ -86,11 +97,16 @@
 			this.getTestfile();
 		},
 		methods: {
-			geturl(location){
+			 gohome(){
+				this.$router.push({
+					path: '/home'
+				});
+			},
+			geturl(location) {
 				//var a=location.split(".");
 				var url = this.HOST + location;
 				//return url;
-				window.location.href=url;
+				window.location.href = url;
 				// this.axios({
 				//    url: url, // 服务器上pdf路径
 				//    method: 'get',
@@ -120,7 +136,7 @@
 					}
 				})
 			},
-			getTestfile(){
+			getTestfile() {
 				this.testId = this.$route.query.testId;
 				this.axios({
 					methods: "get",
@@ -136,6 +152,29 @@
 			},
 			goBack() {
 				this.$router.go(-1);
+			},
+			dateFormat(fmt, date) {
+				let ret = "";
+				date = new Date(date);
+				const opt = {
+					'Y+': date.getFullYear().toString(), // 年
+					'm+': (date.getMonth() + 1).toString(), // 月
+					'd+': date.getDate().toString(), // 日
+					// 'H+': date.getHours().toString(), // 时
+					// 'M+': date.getMinutes().toString(), // 分
+					// 'S+': date.getSeconds().toString() // 秒
+					// 有其他格式化字符需求可以继续添加，必须转化成字符串
+				}
+				for (let k in opt) {
+					ret = new RegExp('(' + k + ')').exec(fmt)
+					if (ret) {
+						fmt = fmt.replace(
+							ret[1],
+							ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+						)
+					}
+				}
+				return fmt
 			}
 		}
 	}
@@ -144,6 +183,20 @@
 <style scoped>
 	.box-card {
 		margin-top: 2%;
-		margin-bottom: 6%
+		margin-bottom: 6%;
+		margin-right: 5%;
+		margin-left: 5%;
+	}
+
+	.header {
+		height: 120px !important;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+	}
+
+	.tiao {
+		height: 10px;
+		width: 102%;
+		margin-left: -10px;
+		background-color: #00aeef;
 	}
 </style>

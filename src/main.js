@@ -7,6 +7,8 @@ import './assets/font/iconfont.css'
 Vue.config.productionTip = false
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import * as dateUtils from "./util/myDate.js"
+
 Vue.prototype.$axioss = axios;
 Vue.prototype.HOST = "/api";
 //Vue.prototype.HOST="http://114.116.40.188:8082"
@@ -58,6 +60,30 @@ router.beforeEach((to, from, next) => {
 		next();
 	}
 });
+
+/**
+ * 计算两个日期之间的天数
+ * @param dateString1  开始日期 yyyy-MM-dd
+ * @param dateString2  结束日期 yyyy-MM-dd
+ * @returns {number} 如果日期相同 返回一天 开始日期大于结束日期，返回0
+ */
+function  getDaysBetween(dateString1,dateString2){
+    var  startDate = Date.parse(dateString1);
+    var  endDate = Date.parse(dateString2);
+    if (startDate>endDate){
+        return 0;
+    }
+    if (startDate==endDate){
+        return 1;
+    }
+    var days=(endDate - startDate)/(1*24*60*60*1000);
+    return  days;
+}
+var d=new Date();
+var d2=dateUtils.formatDate(d, 'yyyy-MM-dd');
+var days=getDaysBetween(d2,"2021-12-25");
+Vue.prototype.days = days;
+
 new Vue({
 	router,
 	store: store,

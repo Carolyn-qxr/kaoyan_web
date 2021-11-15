@@ -1,6 +1,6 @@
 <template>
     <div>
-    <el-card class="box-card">
+    <el-card style="height:250px">
   <div slot="header" >
     <span>时间规划</span>
   </div>
@@ -14,7 +14,6 @@
         <el-button type="text" style="margin-left:10%" @click="task()">前往</el-button>
     </a>
     </el-card>
-	<el-button @click="admin()">管理员</el-button>
     </div>
 </template>
 
@@ -22,7 +21,7 @@
 export default{
     data(){
         return{
-            day: "82",
+            day: this.days,
         }
     },
 	methods:{
@@ -36,3 +35,6 @@ export default{
 }
         
 </script>
+<style scoped>
+
+</style>

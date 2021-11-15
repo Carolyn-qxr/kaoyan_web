@@ -24,7 +24,7 @@ module.exports = {
       },
       '/api': {
 		  target: 'http://localhost:8082',
-        //target: 'http://114.116.40.188:8082', //这里后台的地址模拟的;应该填写你们真实的后台接口
+        target: 'http://114.116.40.188:8082', //这里后台的地址模拟的;应该填写你们真实的后台接口
         ws: true,
         changOrigin: true, //允许跨域
         pathRewrite: {

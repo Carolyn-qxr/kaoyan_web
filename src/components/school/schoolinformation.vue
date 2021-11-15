@@ -1,15 +1,22 @@
 <template>
 <el-container>
      <el-header class="header">
-            <h1>{{schoolName}}</h1> 
-            <a>计算机大类</a>
-            <el-divider></el-divider>           
+            <div class="title">
+                <h1>{{schoolName}}</h1> 
+                <a>计算机大类</a>       
+            </div>
+             <i class="el-icon-house" style="position:absolute;left:15%;top:12.3%;font-color:#909399;font-size:0.9em" @click="gohome">首页</i>
         </el-header>
+       
+         <div class="tiao">
+
+        </div>
         <el-container>
             <el-main >
                 <el-page-header @back="goBack" >
                  </el-page-header>
-                <el-card class="box-card">
+                 <!-- 学院招生信息 -->
+                <div class="box-card">
                      <el-table :data="tableData" style="width: 100%">
                         <el-table-column prop="inforid" label="专业编号" width="180" v-if="false">  </el-table-column>
                         <el-table-column prop="exammethod" label="考试方式" width="180">  </el-table-column>
@@ -23,7 +30,7 @@
                              </template>
                         </el-table-column>
                         </el-table>
-                </el-card>
+                </div>
             </el-main>
         </el-container>
 </el-container>
@@ -35,16 +42,23 @@
 export default {
     data() {
         return{
-            schoolName:"",
-            tableData:[],
+            schoolName:'北工大',
+            tableData:[{}],
             form:[],
             schoolNum:""
         }   
     },
     created(){
-        this.getSchoolInformation();
+        //渲染招生信息
+         this.getSchoolInformation();
     },
     methods:{
+        gohome(){
+				this.$router.push({
+					path: '/home'
+				});
+			},
+        //通过院校id从后台获取院校招生信息
         getSchoolInformation(){
             this.schoolNum=this.$route.query.schoolNum;
             this.schoolName=this.$route.query.schoolName;
@@ -62,7 +76,7 @@ export default {
                 }
             })
         },
-
+        //跳转考试科目页面
         gotosubjectinformation(row){
             this.form=row;
             this.$router.push({path:'/subject',query:{inforId: this.form.inforid}});
@@ -76,10 +90,21 @@ export default {
 </script>
 <style scoped>
 .header{
-    height: 100px !important;
+    height: 120px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+
 }
 .box-card{
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.tiao{
+    height: 10px;
+    width:102%;
+    margin-left:-10px;
+    background-color:	#00aeef;
+}
+.title{
+    position:absolute;top:2%
 }
 </style>

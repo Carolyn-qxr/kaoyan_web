@@ -1,13 +1,18 @@
 <template>
 	<el-container>
+		<!-- 导航栏 -->
 		<el-header class="header">
 			<homeheader></homeheader>
 		</el-header>
+		 <div class="tiao">
+
+        </div>
 		<el-main>
+			<!-- 按地区分类 -->
 			<el-page-header @back="goBack" content="院校分类">
 			</el-page-header>
 			<br>
-			<el-card class="box-card">
+			<div class="box-card">
 				<h3>地区 </h3>
 				<div style="margin-left:5%">
 					<el-radio-group v-model="radio" @change="getSchoolForm(0,8)">
@@ -16,13 +21,15 @@
 
 					</el-radio-group>
 				</div>
-
+				<!-- 院校信息 -->
 				<el-table :data="tableData" style="width: 100%;margin-top:2%">
 					<el-table-column prop="schoolnum" label="院校编号" v-if="false" width="180">
 					</el-table-column>
 					<el-table-column prop="features" label="标签" width="180">
 						<template slot-scope="scope">
-							<el-tag :type="scope.row.features ==='一流大学' ? 'primary' :'success'"> {{scope.row.features}}
+							<el-tag v-show="scope.row.features ===1"> 一流大学
+							</el-tag>
+							<el-tag v-show="scope.row.features ===2" type="success"> 一流学科
 							</el-tag>
 						</template>
 					</el-table-column>
@@ -51,12 +58,14 @@
 						</template>
 					</el-table-column>
 				</el-table>
-			</el-card>
-			<div class="block">
-				<el-pagination layout="prev, pager, next" :total="this.pageAllSize*10"
-					@current-change="PageChage">
-				</el-pagination>
+				<!-- 分页 -->
+				<div class="block">
+					<el-pagination layout="prev, pager, next" :total="this.pageAllSize*10"
+						@current-change="PageChage">
+					</el-pagination>
+				</div>
 			</div>
+			
 		</el-main>
 	</el-container>
 </template>
@@ -80,44 +89,48 @@
 				feature: [{
 					text: "一流大学"
 				}],
-				// tableData:[{schoolName:"北京工业大学",
-				// official: "https://element.eleme.io"}],
-				tableData: [],
+				tableData:[{schoolName:"北京工业大学",
+				official: "https://element.eleme.io"}],
+				// tableData: [],
 				radio: "全部",
 				pageAllSize:0
 			}
 
 		},
 		mounted() {
-			if (this.schoolName == "") //逻辑上还有问题
+			if (this.schoolName == "") 
 				this.getSchoolForm(0, 8);
 			else
 				this.getSchoolByName()
 			
 		},
 		methods: {
+			// 换页
 			PageChage(x){
 				this.getSchoolForm(x,8);
 			},
 			filterTag(value, row) {
 				return row.features === value;
 			},
+			//返回首页
 			goBack() {
 				this.$store.commit("editTitle", "");
 				this.$router.push({
 					path: '/home'
 				});
 			},
+			//点击具体院校的跳转
 			enterSchool(row) {
-				this.form = row;
+				console.log(row);
 				this.$router.push({
 					path: '/schoolinformation',
 					query: {
-						schoolNum: this.form.schoolnum,
-						schoolName: this.form.schoolname
+						schoolNum: row.schoolnum,
+						schoolName: row.schoolname
 					}
 				});
 			},
+			//通过地区从后台获取院校信息
 			getSchoolForm(pageNum, pageSize) {
 				this.$axioss({
 					method: "get",
@@ -136,6 +149,7 @@
 					}
 				})
 			},
+			//搜索栏通过院校名称模糊查找院校
 			getSchoolByName() {
 				this.$axioss({
 					method: "get",
@@ -164,13 +178,31 @@
 </script>
 <style scoped>
 	.header {
-		background: #FFFF;
-		height: 200px !important;
+	
+		width: 100%;
+		height: 120px !important;
+		margin-top: -10px;
+		margin-left: -10px;
+		margin-right: -10px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+
 
 	}
 
 	.box-card {
-		margin-left: 10%;
-		margin-right: 10%;
+		margin-left: 5%;
+		margin-right: 5%;
+		
 	}
+	.block{
+		margin-left:50%;
+		
+		top:93%
+	}
+	.tiao{
+    height: 10px;
+    width:100%;
+    margin-left:-10px;
+    background-color:	#00aeef;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-card class="box-card">
+		<el-card class="box-card" style="height:250px">
 			<div slot="header">
 				<span>院校库</span>
 				<el-button type="text" style="margin-left:70%" @click="gotoschoolsearch">前往</el-button>
@@ -10,13 +10,14 @@
 			</el-col>
 		</el-card>
 		<br>
-		<el-card class="box-card">
+		<br>
+		<el-card class="box-card" style="height:250px">
 			<div slot="header">
 				<span>资料库</span>
 				<el-button type="text" style="margin-left:70%" @click="gototestsearch">前往</el-button>
 			</div>
 			<el-col :span="8" v-for="(name,index) in subject" :key="index">
-				<el-button type="text" @click="gotoTest(name.courseid,name.coursetype)">{{name.coursename}}</el-button>
+				<el-button  type="text" @click="gotoTest(name.courseid,name.coursetype)">{{name.coursename}}</el-button>
 			</el-col>
 		</el-card>
 	</div>

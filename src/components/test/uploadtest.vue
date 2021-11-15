@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<el-button @click="dialogVisible=true">上传</el-button>
+	<div class="upload">
+		<el-button @click="upload()" style="position:absolute;left:90%">上传</el-button>
 		<el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
 			<el-form ref="form" :model="form" label-width="80px">
 				<el-form-item label="标题">
@@ -67,6 +67,17 @@
 			}
 		},
 		methods: {
+			upload(){
+				if(this.userName==""){
+				     const h = this.$createElement;
+				    this.$notify({
+				        title: '未登录',
+				        message: h('i', { style: 'color: teal'}, '您还没有登录，请先登录后进行上传操作')
+				    });
+				    this.$router.push({path:'/home'});
+				}
+				this.dialogVisible=true;
+			},
 			changeId(id){
 				var i=this.subjectName.find(course => course.courseid==id);
 				this.courseName=i.coursename;

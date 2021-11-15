@@ -5,7 +5,7 @@
 			<el-button plain class="btn2" @click="showTable2" size="mini" style="margin-left: 0px">全部任务</el-button>
 		</div>
 		<el-table :data="tableData1.filter(data => !search || data.planname.toLowerCase().includes(search.toLowerCase()))"
-			style="width: 90%" v-show="t1">
+			style="width: 100%" v-show="t1">
 			<el-table-column label="日期" width="200px" align="center">
 				<template slot-scope="scope">
 					<i class="el-icon-time"></i>
@@ -20,44 +20,52 @@
 			</el-table-column>
 			<el-table-column label="任务信息" width="300px" align="center" prop="information">
 			</el-table-column>
-			<el-table-column align="right">
+			<el-table-column label="完成情况" width="100px" align="center">
+				<template slot-scope="scope">
+					<i v-show="scope.row.state==1" class="el-icon-check"></i> 
+					<i v-show="scope.row.state==0" class="el-icon-close"></i> 
+				</template>
+			</el-table-column>
+			<el-table-column align="right" width="300px">
 				<!-- eslint-disable-next-line -->
-				<template slot="header" slot-scope="scope">
-					<el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+				<template slot="header" slot-scope="scope" >
+					<el-input v-model="search" size="mini" placeholder="输入关键字搜索"/>
 				</template>
 				<template slot-scope="scope">
-					<el-button icon="el-icon-check" circle size="mini"
-						style="margin-right: 30px" @click="finishPlan(scope.row)" v-show="scope.row.state==0"></el-button>
-						<span v-show="scope.row.state==1">已完成</span>
-					<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-					<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete
+					<el-button size="mini" @click="finishPlan(scope.row)">完成</el-button>
+					<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除
 					</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		<!--全部任务-->
 		<el-table :data="tableData2.filter(data => !search || data.planname.toLowerCase().includes(search.toLowerCase()))"
-			style="width: 90%" v-show="t2">
+			style="width: 95%" v-show="t2">
 			<el-table-column label="日期" width="200px" align="center">
 				<template slot-scope="scope">
 					<i class="el-icon-time"></i>
 					<span style="margin-left: 10px">{{ plandayTime(scope.row.plandate) }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="任务名称" width="200px" align="center" prop="planname">
-			</el-table-column>
+			<el-table-column label="任务名称" width="200px" align="center"  class="el-icon-check" style="margin-right:200px" prop="planname"></el-table-column>
 			<el-table-column label="任务信息" width="400px" align="center" prop="information">
 			</el-table-column>
-			<el-table-column align="right">
+			<el-table-column label="完成情况" width="200px" align="center">
+				<template slot-scope="scope">
+					<i v-show="scope.row.state==1"  class="el-icon-check"></i> 
+					<i v-show="scope.row.state==0" class="el-icon-close"></i> 
+				</template>
+			</el-table-column>
+			<el-table-column align="right" width="300px">
 				<!-- eslint-disable-next-line -->
 				<template slot="header" slot-scope="scope">
 					<el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
 				</template>
 				<template slot-scope="scope">
-					<span v-show="scope.row.state==1">已完成</span>
-					<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-					<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete
-					</el-button>
+					<el-button size="mini" @click="finishPlan(scope.row)">完成</el-button>
+					<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>

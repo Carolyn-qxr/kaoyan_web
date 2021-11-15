@@ -3,15 +3,18 @@
 		<el-header class="header">
 			<homeheader></homeheader>
 		</el-header>
+		<div class="tiao">
+
+        </div>
 		<el-container>
 			<el-main>
 				<el-page-header @back="goBack" content="资料分类">
 				</el-page-header>
 				<uploadtest></uploadtest>
-				<el-card class="box-card">
+				<div class="box-card">
 					<h4>科目分类 </h4>
 					<div style="margin-left:10%">
-						<el-radio-group v-model="courseType" @change="getTestBycourseType()" size="small">
+						<el-radio-group v-model="courseType" @change="getTestBycourseType()">
 							<el-radio-button v-for="(course,index) in coursesort " :key="index" :label="index">
 								{{course}}
 							</el-radio-button>
@@ -20,14 +23,14 @@
 					</div>
 					<h4>专业编号分类 </h4>
 					<div style="margin-left:10%">
-						<el-radio-group v-model="courseName" @change="getTestBycourseName(0,8)" size="small">
+						<el-radio-group v-model="courseName" @change="getTestBycourseName(0,8)">
 							<el-radio-button v-for="(course,index) in courseNum " :key="index" :label="course.courseid">
 								{{course.coursename}}
 							</el-radio-button>
 						</el-radio-group>
 					</div>
-					<br><br><br>
-					<el-card class="box-card">
+					<br><br>
+					<div >
 						<el-table :data="test" style="width:100%">
 							<el-table-column prop="title" label="标题" width="650">
 							</el-table-column>
@@ -41,8 +44,8 @@
 								</template>
 							</el-table-column>
 						</el-table>
-					</el-card>
-				</el-card>
+					</div>
+				</div>
 				<div class="block">
 					<el-pagination layout="prev, pager, next" :total="this.pageAllSize*10" @current-change="PageChage">
 					</el-pagination>
@@ -66,7 +69,7 @@
 			return {
 				coursesort: ["政治", "英语", "数学", "专业课"],
 				courseNum: [],
-				test: [],
+				test: [{}],
 				userName: "",
 				courseName: -1,
 				courseType: "0", //课程种类
@@ -75,6 +78,11 @@
 			}
 		},
 		methods: {
+			gohome(){
+				this.$router.push({
+					path: '/home'
+				});
+			},
 			PageChage(x){
 				this.getTestBycourseName(x,8);
 			},
@@ -164,14 +172,33 @@
 	}
 </script>
 <style scoped>
-	.header {
-		height: 200px !important;
+    .header {
+		height: 120px !important;
+		margin-top: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+
+
 	}
 
 	.box-card {
-		margin-left: 10%;
-		margin-right: 10%;
-		margin-top: 5px;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-top: 40px;
 		margin-bottom: 10px;
+	}
+	.tiao{
+	position: absolute;
+	top: 120px;
+    height: 10px;
+    width:102%;
+    margin-left:-10px;
+    background-color:	#00aeef;
+    }
+	.block{
+		position:absolute;
+		left:47%;
+		top:93%
 	}
 </style>
